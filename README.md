@@ -21,7 +21,11 @@ Planned models:
     In theory an L2 regularizer wil ensure that the weights are roughly evenly distributed, but at the same time, the variance of the embedding vectors should only change significantly if there is a reason to do so, so this shouldn't be too important
   Use an adversarial network to try and coerce the embedding matrix to being iid uniform(-1, 1)
     This is a much iffier prospect
-    Not certain it's possible
+    Mathematically, this is possible
+    However, the transformations required are not simple by any means
+    As  such if the network learns how to have iid uniform embedding vectors, it will need to learn a completely different weight system
+    More likely it will learn vectors which are pretty close to uniformly distributed and not too correlated
+    while the regularizer based approach I could trust to learn a near perfect set of embeddings with no lnear correlations
     Pay careful attention to relative goodness of fit of this model vs others
 
 Planned explorations:
@@ -29,3 +33,5 @@ Planned explorations:
   For models with regularizers, confirm very low covariance, and then do same (with and without PCA - compare hopefully low differences)
   Try and investigate model to determine importance of the different embedding vectors
   Ideally, figure out a way to attach a regularizer to this, to force all the variance into the embedding vectors
+  Without a regularizer, we want to look backward through the network to determine the importance of each input variable, due to the relative importance of the weights
+  As well as comparing the results, will likely want to get some details on these movies from IMDB
