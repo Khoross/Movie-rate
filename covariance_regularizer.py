@@ -1,6 +1,7 @@
 from keras import backend as K
 from keras import Regularizer
 
+
 class CovarianceRegularizer(Regularizer):
     """Regularzer for punishing correllated inputs.
     Calculates the covariance matrix for the current weights
