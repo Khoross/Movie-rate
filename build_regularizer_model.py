@@ -14,7 +14,8 @@ def build_regularizer_model(users,
                             layer_reg=None,
                             dropout=[0.5],
                             opt='Nadm',
-                            loss='mse',):
+                            act='ELU'
+                            loss='mse', ):
     """Builds a model for generating movie ratings
     uses a covariance regularizer to force linear independence of embeddings
     input parameters allow for more fine control"""
@@ -36,10 +37,10 @@ def build_regularizer_model(users,
         print("Number of dense layers not multiple of number of dropout layers. Repeating first droupout value")
         dropout = np.tile(dropout[0], len(dense))
     for nodes, drop in zip(dense, dropout):
-        x = Dense(nodes, activation='relu', kernel_regularizer=layer_reg)(x)
+        x = Dense(nodes, activation=act, kernel_regularizer=layer_reg)(x)
         x = Dropout(drop)(x)
     x = Dense(1, name='rating_output')(x)
 
-    regularizer_model = Model([user_in, movie_in], x,)
-    regularizer_model.compile(opt, loss=loss,)
+    regularizer_model = Model([user_in, movie_in], x, )
+    regularizer_model.compile(opt, loss=loss, )
     return(regularizer_model)
